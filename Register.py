@@ -161,7 +161,7 @@ image_show = tk.Button(frame3,text='Load the data ',command=load )
 image_show.place(relx= 0.2, rely= 0.9,relheight=0.08 , relwidth=0.2 )
 
 #label for the processed image 
-cur_auto_take = tk.Label(frame3,text='VEHICLE IMAGE DATA')
+cur_auto_take = tk.Label(frame3,text='PALM IMAGE DATA')
 cur_auto_take.place(relx=0 ,rely= 0.015, relwidth= 1, relheight=0.05)
 
 def database_action():
@@ -182,10 +182,16 @@ def database_action():
     conn = sqlite3.connect('Palm_data.db')
     with conn:
         cursor=conn.cursor()
-    cursor.execute('CREATE TABLE IF NOT EXISTS Toll(NAME TEXT,MOBILE TEXT,PALM TEXT,Date_and_Time TEXT,Agree TEXT,Normal IMAGE, processed IMAGE)')
-    cursor.execute('INSERT INTO Toll(NAME ,MOBILE ,PALM ,Date_and_Time ,Agree ,IMAGE,IMAGE) VALUES(?,?,?,?,?,?,?)',(Name,Mobile,Palm,date_time,check,image_data2,image_data))
+    cursor.execute('CREATE TABLE IF NOT EXISTS Toll(NAME TEXT,MOBILE TEXT,PALM TEXT,Date_and_Time TEXT,Agree TEXT,Normal BLOB, processed BLOB)')
+    cursor.execute('INSERT INTO Toll(NAME ,MOBILE ,PALM ,Date_and_Time ,Agree ,Normal,processed) VALUES(?,?,?,?,?,?,?)',(Name,Mobile,Palm,date_time,check,image_data,image_data2))
     conn.commit()
     conn.close()
+
+    place_combobox.delete(0,tk.END)
+    name_entry.delete(0,tk.END)
+   
+    
+
     
 submit_button = tk.Button(frame, text='SUBMIT',command=database_action)
 submit_button.place(relx= 0.2, rely= 0.9,relheight=0.05 , relwidth=0.2 )
